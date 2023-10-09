@@ -1,5 +1,3 @@
-require 'active_record/associations/join_dependency/join_part'
-
 if ActiveRecord::VERSION::STRING =~ /^6\.1/
   module ActiveRecord
 
