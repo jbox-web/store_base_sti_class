@@ -1,0 +1,75 @@
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  schedule:
+    - cron: '0 4 1 * *'
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: 'postgres:14'
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: store_base_sti_class_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - '3.2'
+          - '3.1'
+          - '3.0'
+          - 'head'
+        rails:
+          - activerecord_7.1.0
+          - activerecord_7.0.8
+          - activerecord_6.1.7
+          - activerecord_6.0.6
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Setup Ruby cache
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.rails }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.rails }}-
+
+      - name: Bundle
+        env:
+          RAILS_VERSION: ${{ matrix.rails }}
+          BUNDLE_GEMFILE: gemfiles/${{ matrix.rails }}.gemfile
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: RSpec
+        env:
+          RAILS_VERSION: ${{ matrix.rails }}
+          BUNDLE_GEMFILE: gemfiles/${{ matrix.rails }}.gemfile
+        run: bin/rake
