@@ -40,7 +40,6 @@ jobs:
           - activerecord_7.1.0
           - activerecord_7.0.8
           - activerecord_6.1.7
-          - activerecord_6.0.6
 
     steps:
       - name: Checkout

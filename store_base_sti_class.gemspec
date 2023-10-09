@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
 
-  s.add_runtime_dependency('activerecord', ['>= 6', '< 7.2'])
+  s.add_runtime_dependency('activerecord', ['>= 6.1', '< 7.2'])
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'minitest'
