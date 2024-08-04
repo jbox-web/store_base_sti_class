@@ -42,6 +42,9 @@ jobs:
           - activerecord_7.0.8
           - activerecord_6.1.7
 
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.rails }}.gemfile
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,18 +53,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-
-      - name: Bundle
-        env:
-          RAILS_VERSION: ${{ matrix.rails }}
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.rails }}.gemfile
-        run: |
-          gem install bundler
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          bundler-cache: true
 
       - name: RSpec
-        env:
-          RAILS_VERSION: ${{ matrix.rails }}
-          BUNDLE_GEMFILE: gemfiles/${{ matrix.rails }}.gemfile
         run: bin/rake
