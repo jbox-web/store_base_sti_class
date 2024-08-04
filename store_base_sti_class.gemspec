@@ -27,19 +27,5 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
 
-  s.add_runtime_dependency('activerecord', ['>= 6.1', '< 7.2'])
-
-  s.add_development_dependency 'appraisal'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'pg'
-  s.add_development_dependency 'rake'
-
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.4.0")
-    s.add_development_dependency "base64"
-    s.add_development_dependency "bigdecimal"
-    s.add_development_dependency "mutex_m"
-    s.add_development_dependency "drb"
-    s.add_development_dependency "logger"
-  end
+  s.add_dependency('activerecord', ['>= 6.1', '< 7.2'])
 end
