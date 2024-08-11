@@ -7,3 +7,6 @@ gemfiles/*.lock
 
 # Ignore logs
 test/*.log
+
+# Ignore MacOS files
+.DS_Store
