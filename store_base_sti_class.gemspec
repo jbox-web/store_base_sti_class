@@ -23,9 +23,9 @@ Gem::Specification.new do |s|
 
   s.license     = 'MIT'
 
-  s.required_ruby_version = '>= 3.0.0'
+  s.required_ruby_version = '>= 3.1.0'
 
   s.files = `git ls-files`.split("\n")
 
-  s.add_dependency('activerecord', ['>= 6.1', '< 7.2'])
+  s.add_dependency('activerecord', ['>= 7.0', '< 7.2'])
 end
