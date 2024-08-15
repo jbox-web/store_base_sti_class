@@ -27,5 +27,5 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
 
-  s.add_dependency('activerecord', ['>= 7.0', '< 7.2'])
+  s.add_dependency('activerecord', ['>= 7.0', '< 8.0'])
 end
