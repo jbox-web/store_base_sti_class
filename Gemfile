@@ -6,6 +6,7 @@ gemspec
 
 gem 'appraisal', git: 'https://github.com/n-rodriguez/appraisal.git', branch: 'wip/combustion'
 
+gem 'guard-rspec'
 gem 'pg'
 gem 'rake'
 gem 'rspec'
