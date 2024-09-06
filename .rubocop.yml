@@ -1,0 +1,30 @@
+---
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  Exclude:
+    - bin/*
+    - gemfiles/*
+    - test/**/*
+    - lib/store_base_sti_class_for_*.rb
+
+Gemspec/RequireMFA:
+  Enabled: false
+
+#########
+# STYLE #
+#########
+
+Style/Documentation:
+  Enabled: false
+
+##########
+# LAYOUT #
+##########
+
+Layout/LineLength:
+  Max: 125

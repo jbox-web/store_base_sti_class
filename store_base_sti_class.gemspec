@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Nicolas Rodriguez']
   s.email       = ['nico@nicoladmin.fr']
+  s.license     = 'MIT'
   s.homepage    = 'https://github.com/jbox-web/store_base_sti_class'
   s.summary     = <<~MSG
     Modifies ActiveRecord 5.0.x - 7.0.x with the ability to store the actual class (instead of the base class) in
@@ -20,8 +21,6 @@ Gem::Specification.new do |s|
     controls whether ActiveRecord will store the base class or the actual class. Defaults to true for backwards
     compatibility.'
   MSG
-
-  s.license     = 'MIT'
 
   s.required_ruby_version = '>= 3.1.0'
 
