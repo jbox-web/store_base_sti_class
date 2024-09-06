@@ -9,7 +9,6 @@ AllCops:
   Exclude:
     - bin/*
     - gemfiles/*
-    - spec/**/*
     - lib/store_base_sti_class_for_*.rb
 
 Gemspec/RequireMFA:
@@ -22,9 +21,39 @@ Gemspec/RequireMFA:
 Style/Documentation:
   Enabled: false
 
+Style/ArgumentsForwarding:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
 ##########
 # LAYOUT #
 ##########
 
 Layout/LineLength:
-  Max: 125
+  Max: 150
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+##########
+# NAMING #
+##########
+
+Naming/BlockForwarding:
+  Enabled: false
+
+#########
+# RSPEC #
+#########
+
+RSpec/ExampleLength:
+  Max: 8
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NotToNot:
+  EnforcedStyle: to_not

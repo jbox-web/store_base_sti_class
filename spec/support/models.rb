@@ -19,8 +19,8 @@ end
 
 class Tagging < ActiveRecord::Base
   belongs_to :tag
-  belongs_to :polytag, polymorphic:  true
-  belongs_to :taggable, polymorphic:  true, counter_cache: true
+  belongs_to :polytag, polymorphic: true
+  belongs_to :taggable, polymorphic: true, counter_cache: true
 end
 
 class Tag < ActiveRecord::Base

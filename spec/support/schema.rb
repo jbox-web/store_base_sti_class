@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Schema < ActiveRecord::Migration[5.0]
-  def self.up
+  def self.up # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     suppress_messages do
       create_table :authors, force: true do |t|
         t.string :name, null: false

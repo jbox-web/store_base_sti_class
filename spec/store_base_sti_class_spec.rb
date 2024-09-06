@@ -9,12 +9,12 @@ RSpec.describe StoreBaseSTIClass do
   end
 
   after do
-    ActiveRecord::Base.store_base_sti_class = @old_store_base_sti_class
+    ActiveRecord::Base.store_base_sti_class = @old_store_base_sti_class # rubocop:disable RSpec/InstanceVariable
   end
 
   describe 'test_polymorphic_belongs_to_assignment_with_inheritance' do
     context 'when assigning a saved record' do
-      let(:post) { SpecialPost.create(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+      let(:post) { SpecialPost.create(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
       let(:tagging) { Tagging.new }
 
       it do
@@ -25,7 +25,7 @@ RSpec.describe StoreBaseSTIClass do
     end
 
     context 'when assigning a new record' do
-      let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+      let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
       let(:tagging) { Tagging.new }
 
       it do
@@ -37,7 +37,7 @@ RSpec.describe StoreBaseSTIClass do
   end
 
   describe 'test_polymorphic_has_many_create_model_with_inheritance' do
-    let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
     let(:misc_tag) { Tag.create(name: 'Misc') }
 
     it do
@@ -50,7 +50,7 @@ RSpec.describe StoreBaseSTIClass do
   end
 
   describe 'test_polymorphic_has_one_create_model_with_inheritance' do
-    let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.new(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
     let(:misc_tag) { Tag.create(name: 'Misc') }
 
     it do
@@ -76,14 +76,14 @@ RSpec.describe StoreBaseSTIClass do
     let(:tag) { SpecialTag.create!(name: 'Special') }
 
     it do
-      tag.polytagged_posts.create!(title: 'To Be or Not To Be?', body: "the body")
+      tag.polytagged_posts.create!(title: 'To Be or Not To Be?', body: 'the body')
 
       expect(tag.polytaggings.first.polytag_type).to eq 'SpecialTag'
     end
   end
 
   describe 'include_polymorphic_has_one' do
-    let(:post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
     let(:misc_tag) { Tag.create(name: 'Misc') }
 
     it do
@@ -96,8 +96,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'include_polymorphic_has_many' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
 
     it do
       tag.polytagged_posts << special_post
@@ -110,8 +110,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'include_polymorphic_has_many_through' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
 
     it do
       tag.polytagged_posts << special_post
@@ -124,8 +124,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'join_polymorhic_has_many' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
 
     it do
       tag.polytagged_posts << special_post
@@ -137,8 +137,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'join_polymorhic_has_many_through' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
 
     it do
       tag.polytagged_posts << special_post
@@ -150,8 +150,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'has_many_through_polymorphic_has_one' do
     let(:author) { Author.create!(name: 'Bob') }
-    let(:post) { Post.create!(title: 'Budget Forecasts Bigger 2011 Deficit', author: author, body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'IBM Watson' 's Jeopardy play', author: author, body: "the body") }
+    let(:post) { Post.create!(title: 'Budget Forecasts Bigger 2011 Deficit', author: author, body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'IBM Watsons Jeopardy play', author: author, body: 'the body') }
     let(:special_tag) { SpecialTag.create!(name: 'SpecialGeneral') }
 
     it do
@@ -162,8 +162,8 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'has_many_polymorphic_with_source_type' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
-    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
+    let(:special_post) { SpecialPost.create!(title: 'Budget Forecasts Bigger 2011 Deficit', body: 'the body') }
 
     it do
       tag.polytagged_posts << special_post
@@ -180,7 +180,7 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'test_polymorphic_has_many_through_with_double_sti_on_join_model' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
 
     it do
       tag.polytagged_posts << post
@@ -210,7 +210,7 @@ RSpec.describe StoreBaseSTIClass do
 
   describe 'where_query' do
     let(:tag) { SpecialTag.create!(name: 'Special') }
-    let(:post) { SpecialPost.create(title: 'Thinking', body: "the body") }
+    let(:post) { SpecialPost.create(title: 'Thinking', body: 'the body') }
 
     it do
       tag.polytagged_posts << post
