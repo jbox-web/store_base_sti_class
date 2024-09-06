@@ -1,32 +1,5 @@
 # frozen_string_literal: true
 
-require 'bundler'
-
-begin
-  Bundler.setup(:default, :development)
-rescue Bundler::BundlerError => e
-  warn e.message
-  warn 'Run `bundle install` to install missing gems'
-  exit e.status_code
-end
-
-if ENV['WITH_COVERAGE'] == 'true'
-  require 'simplecov'
-  SimpleCov.start do
-    enable_coverage :branch
-    add_filter %r{\A/test}
-  end
-end
-
-require 'store_base_sti_class'
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'setup_database'
-require 'models'
-
-Minitest::Test.make_my_diffs_pretty!
-Minitest::Reporters.use! unless ENV['RM_INFO']
-
 # the following is needed because ActiveRecord::TestCase uses ActiveRecord::SQLCounter, which is
 # not bundled as part of the gem
 module ActiveRecord
@@ -74,30 +47,4 @@ module ActiveRecord
   end
 
   ActiveSupport::Notifications.subscribe('sql.active_record', SQLCounter.new)
-end
-
-require 'active_support/test_case'
-
-module ActiveSupport
-  class TestCase
-    private
-
-    def assert_queries(num = 1, options = {})
-      ignore_none = options.fetch(:ignore_none) { num == :any }
-      ActiveRecord::SQLCounter.clear_log
-      yield
-    ensure
-      the_log = ignore_none ? ActiveRecord::SQLCounter.log_all : ActiveRecord::SQLCounter.log
-      if num == :any
-        assert_operator the_log.size, :>=, 1, "1 or more queries expected, but none were executed."
-      else
-        mesg = "#{the_log.size} instead of #{num} queries were executed.#{the_log.size == 0 ? '' : "\nQueries:\n#{the_log.join("\n")}"}"
-        assert_equal num, the_log.size, mesg
-      end
-    end
-
-    def assert_no_queries(&block)
-      assert_queries(0, ignore_none: true, &block)
-    end
-  end
 end
