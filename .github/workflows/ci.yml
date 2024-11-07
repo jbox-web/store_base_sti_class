@@ -55,9 +55,9 @@ jobs:
           - '3.1'
           - 'head'
         rails:
-          - activerecord_7.2.0
-          - activerecord_7.1.3
-          - activerecord_7.0.8
+          - activerecord_7.2
+          - activerecord_7.1
+          - activerecord_7.0
 
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.rails }}.gemfile

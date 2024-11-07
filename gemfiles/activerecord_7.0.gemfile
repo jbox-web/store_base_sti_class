@@ -11,6 +11,14 @@ gem "rubocop"
 gem "rubocop-rake"
 gem "rubocop-rspec"
 gem "simplecov"
-gem "activerecord", "7.2.0"
+gem "activerecord", "~> 7.0.0"
+
+install_if -> { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0") } do
+  gem "base64"
+  gem "bigdecimal"
+  gem "mutex_m"
+  gem "drb"
+  gem "logger"
+end
 
 gemspec path: "../"
