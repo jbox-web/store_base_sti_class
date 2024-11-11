@@ -3,14 +3,14 @@
 source "https://rubygems.org"
 
 gem "appraisal", git: "https://github.com/thoughtbot/appraisal.git"
-gem "guard-rspec"
 gem "pg"
 gem "rake"
 gem "rspec"
-gem "rubocop"
-gem "rubocop-rake"
-gem "rubocop-rspec"
 gem "simplecov"
+gem "guard-rspec", require: false
+gem "rubocop", require: false
+gem "rubocop-rake", require: false
+gem "rubocop-rspec", require: false
 gem "activerecord", "~> 7.0.0"
 
 install_if -> { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0") } do

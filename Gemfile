@@ -4,13 +4,15 @@ source 'https://rubygems.org'
 
 gemspec
 
+# Dev libs
 gem 'appraisal', git: 'https://github.com/thoughtbot/appraisal.git'
-
-gem 'guard-rspec'
 gem 'pg'
 gem 'rake'
 gem 'rspec'
-gem 'rubocop'
-gem 'rubocop-rake'
-gem 'rubocop-rspec'
 gem 'simplecov'
+
+# Dev tools / linter
+gem 'guard-rspec',   require: false
+gem 'rubocop',       require: false
+gem 'rubocop-rake',  require: false
+gem 'rubocop-rspec', require: false
