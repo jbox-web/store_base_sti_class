@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-appraise 'activerecord_7.0' do
-  gem 'activerecord', '~> 7.0.0'
-
-  # Fix: LoadError: cannot load such file -- base64
-  install_if '-> { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0") }' do
-    gem 'base64'
-    gem 'bigdecimal'
-    gem 'mutex_m'
-    gem 'drb'
-    gem 'logger'
-  end
-end
-
 appraise 'activerecord_7.1' do
   gem 'activerecord', '~> 7.1.0'
 

@@ -61,7 +61,6 @@ jobs:
           - activerecord_8.0
           - activerecord_7.2
           - activerecord_7.1
-          - activerecord_7.0
         exclude:
           - ruby: '3.1'
             rails: 'activerecord_8.0'
