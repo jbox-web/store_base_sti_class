@@ -78,5 +78,5 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: RSpec
+      - name: Run RSpec
         run: bin/rspec
