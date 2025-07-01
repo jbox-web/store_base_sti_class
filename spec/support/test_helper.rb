@@ -11,7 +11,8 @@ module TestHelper
     if num == :any
       assert_operator the_log.size, :>=, 1, '1 or more queries expected, but none were executed.'
     else
-      mesg = "#{the_log.size} instead of #{num} queries were executed.#{the_log.size == 0 ? '' : "\nQueries:\n#{the_log.join("\n")}"}"
+      queries_mesg = the_log.size == 0 ? '' : "\nQueries:\n#{the_log.join("\n")}"
+      mesg = "#{the_log.size} instead of #{num} queries were executed.#{queries_mesg}"
 
       expect(the_log.size).to eq(num), mesg
     end
