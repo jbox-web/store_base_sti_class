@@ -3,6 +3,33 @@
 require 'spec_helper'
 
 RSpec.describe StoreBaseSTIClass do
+  describe 'methods' do
+    describe 'ActiveRecord::Base.polymorphic_name' do
+      context 'when store_base_sti_class is true (default for backward compatibility)' do
+        it 'returns the parent class' do
+          expect(ActiveRecord::Base.store_base_sti_class).to be true
+          expect(SpecialPost.polymorphic_name).to eq 'Post'
+        end
+      end
+
+      context 'when store_base_sti_class is false' do
+        before do
+          @old_store_base_sti_class = ActiveRecord::Base.store_base_sti_class
+          ActiveRecord::Base.store_base_sti_class = false
+        end
+
+        after do
+          ActiveRecord::Base.store_base_sti_class = @old_store_base_sti_class # rubocop:disable RSpec/InstanceVariable
+        end
+
+        it 'returns the actual class' do
+          expect(ActiveRecord::Base.store_base_sti_class).to be false
+          expect(SpecialPost.polymorphic_name).to eq 'SpecialPost'
+        end
+      end
+    end
+  end
+
   describe 'behavior' do
     before do
       @old_store_base_sti_class = ActiveRecord::Base.store_base_sti_class

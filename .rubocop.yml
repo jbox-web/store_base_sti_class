@@ -55,5 +55,8 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Max: 5
 
+RSpec/NestedGroups:
+  Max: 4
+
 RSpec/NotToNot:
   EnforcedStyle: to_not
