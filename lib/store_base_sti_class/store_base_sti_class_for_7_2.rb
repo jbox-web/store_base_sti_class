@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ActiveRecord::VERSION::STRING =~ /\A7\.2/
   module StoreBaseSTIClass
     module Inheritance
