@@ -157,15 +157,17 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
     end
   end
 
-  ActiveRecord::Inheritance::ClassMethods.prepend(StoreBaseSTIClass::Inheritance::ClassMethodsPatch)
-  ActiveRecord::Associations::Preloader::ThroughAssociation.prepend(StoreBaseSTIClass::Associations::Preloader::ThroughAssociationPatch)
-  ActiveRecord::Associations::AssociationScope.prepend(StoreBaseSTIClass::Associations::AssociationScopePatch)
-  ActiveRecord::Associations::HasManyThroughAssociation.prepend(StoreBaseSTIClass::Associations::HasManyThroughAssociationPatch)
-  ActiveRecord::Reflection::PolymorphicReflection.prepend(StoreBaseSTIClass::Reflection::PolymorphicReflectionPatch)
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Inheritance::ClassMethods.prepend(StoreBaseSTIClass::Inheritance::ClassMethodsPatch)
+    ActiveRecord::Associations::Preloader::ThroughAssociation.prepend(StoreBaseSTIClass::Associations::Preloader::ThroughAssociationPatch)
+    ActiveRecord::Associations::AssociationScope.prepend(StoreBaseSTIClass::Associations::AssociationScopePatch)
+    ActiveRecord::Associations::HasManyThroughAssociation.prepend(StoreBaseSTIClass::Associations::HasManyThroughAssociationPatch)
+    ActiveRecord::Reflection::PolymorphicReflection.prepend(StoreBaseSTIClass::Reflection::PolymorphicReflectionPatch)
 
-  ActiveRecord::Base.class_eval do
-    # It defaults to true for backwards compatibility.
-    # Setting it to false will alter ActiveRecord's behavior to store the actual class in `polymorphic_type` columns when STI is used.
-    class_attribute :store_base_sti_class, default: true
+    ActiveRecord::Base.class_eval do
+      # It defaults to true for backwards compatibility.
+      # Setting it to false will alter ActiveRecord's behavior to store the actual class in `polymorphic_type` columns when STI is used.
+      class_attribute :store_base_sti_class, default: true
+    end
   end
 end

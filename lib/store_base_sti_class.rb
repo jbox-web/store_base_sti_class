@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # require external dependencies
+require 'active_support'
 require 'active_record'
 
 module StoreBaseSTIClass
