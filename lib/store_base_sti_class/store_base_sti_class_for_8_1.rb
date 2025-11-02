@@ -1,9 +1,7 @@
 if ActiveRecord::VERSION::STRING =~ /\A8\.1/
   module StoreBaseSTIClass
-
     module Inheritance
       module ClassMethodsPatch
-
         # See: https://github.com/rails/rails/blob/v8.1.0/activerecord/lib/active_record/inheritance.rb#L211
         def polymorphic_name
           ActiveRecord::Base.store_base_sti_class ? base_class.name : name
@@ -163,10 +161,9 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.1/
   ActiveRecord::Associations::HasManyThroughAssociation.prepend(StoreBaseSTIClass::Associations::HasManyThroughAssociationPatch)
   ActiveRecord::Reflection::PolymorphicReflection.prepend(StoreBaseSTIClass::Reflection::PolymorphicReflectionPatch)
 
-  module ActiveRecord
-    class Base
-      class_attribute :store_base_sti_class
-      self.store_base_sti_class = true
-    end
+  ActiveRecord::Base.class_eval do
+    # It defaults to true for backwards compatibility.
+    # Setting it to false will alter ActiveRecord's behavior to store the actual class in `polymorphic_type` columns when STI is used.
+    class_attribute :store_base_sti_class, default: true
   end
 end

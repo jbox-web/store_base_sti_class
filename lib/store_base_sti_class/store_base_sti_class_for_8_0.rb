@@ -1,13 +1,8 @@
 if ActiveRecord::VERSION::STRING =~ /\A8\.0/
-  module ActiveRecord
-
-    class Base
-      class_attribute :store_base_sti_class
-      self.store_base_sti_class = true
-    end
-
+  module StoreBaseSTIClass
     module Inheritance
-      module ClassMethods
+      module ClassMethodsPatch
+        # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/inheritance.rb#L211
         def polymorphic_name
           ActiveRecord::Base.store_base_sti_class ? base_class.name : name
         end
@@ -15,10 +10,11 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
     end
 
     module Associations
-      class Preloader
-        class ThroughAssociation < Association
+      module Preloader
+        module ThroughAssociationPatch
           private
 
+          # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/associations/preloader/through_association.rb#L104
           def through_scope
             scope = through_reflection.klass.unscoped
             options = reflection.options
@@ -78,9 +74,10 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
         end
       end
 
-      class AssociationScope
+      module AssociationScopePatch
         private
 
+        # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/associations/association_scope.rb#L81
         def next_chain_scope(scope, reflection, next_reflection)
           primary_key = Array(reflection.join_primary_key)
           foreign_key = Array(reflection.join_foreign_key)
@@ -113,9 +110,10 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
         end
       end
 
-      class HasManyThroughAssociation
+      module HasManyThroughAssociationPatch
         private
 
+        # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/associations/has_many_through_association.rb#L56
         def build_through_record(record)
           @through_records[record] ||= begin
             ensure_mutable
@@ -134,9 +132,10 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
     end
 
     module Reflection
-      class PolymorphicReflection
+      module PolymorphicReflectionPatch
         private
 
+        # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/reflection.rb#L1251
         def source_type_scope
           type = @previous_reflection.foreign_type
           source_type = @previous_reflection.options[:source_type]
@@ -154,5 +153,17 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
         end
       end
     end
+  end
+
+  ActiveRecord::Inheritance::ClassMethods.prepend(StoreBaseSTIClass::Inheritance::ClassMethodsPatch)
+  ActiveRecord::Associations::Preloader::ThroughAssociation.prepend(StoreBaseSTIClass::Associations::Preloader::ThroughAssociationPatch)
+  ActiveRecord::Associations::AssociationScope.prepend(StoreBaseSTIClass::Associations::AssociationScopePatch)
+  ActiveRecord::Associations::HasManyThroughAssociation.prepend(StoreBaseSTIClass::Associations::HasManyThroughAssociationPatch)
+  ActiveRecord::Reflection::PolymorphicReflection.prepend(StoreBaseSTIClass::Reflection::PolymorphicReflectionPatch)
+
+  ActiveRecord::Base.class_eval do
+    # It defaults to true for backwards compatibility.
+    # Setting it to false will alter ActiveRecord's behavior to store the actual class in `polymorphic_type` columns when STI is used.
+    class_attribute :store_base_sti_class, default: true
   end
 end
