@@ -26,5 +26,5 @@ Gem::Specification.new do |s|
 
   s.files = Dir['README.md', 'LICENSE', 'lib/**/*.rb']
 
-  s.add_dependency('activerecord', ['>= 7.0', '< 8.2'])
+  s.add_dependency('activerecord', ['>= 7.2', '< 8.2'])
 end
