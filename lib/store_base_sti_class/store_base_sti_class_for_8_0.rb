@@ -6,7 +6,7 @@ if ActiveRecord::VERSION::STRING =~ /\A8\.0/
       module ClassMethodsPatch
         # See: https://github.com/rails/rails/blob/v8.0.0/activerecord/lib/active_record/inheritance.rb#L211
         def polymorphic_name
-          ActiveRecord::Base.store_base_sti_class ? base_class.name : name
+          ActiveRecord::Base.store_base_sti_class ? super : name
         end
       end
     end
