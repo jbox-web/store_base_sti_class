@@ -9,7 +9,7 @@ AllCops:
   Exclude:
     - bin/*
     - gemfiles/*
-    - lib/store_base_sti_class_for_*.rb
+    - lib/store_base_sti_class/store_base_sti_class_for_*.rb
 
 Gemspec/RequireMFA:
   Enabled: false
