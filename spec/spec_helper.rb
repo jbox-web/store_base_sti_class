@@ -11,6 +11,7 @@ end
 
 # Load test gems
 require 'active_record'
+require 'dbg-rb'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
