@@ -27,6 +27,10 @@ Style/ArgumentsForwarding:
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
 
+Style/OneClassPerFile:
+  Exclude:
+    - spec/support/models.rb
+
 ##########
 # LAYOUT #
 ##########
