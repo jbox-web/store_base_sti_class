@@ -13,3 +13,6 @@ spec/*.log
 
 # Ignore MacOS files
 .DS_Store
+
+# Ignore codegraph db
+/.codegraph
